@@ -24,7 +24,8 @@ export default function LoginPage() {
       await login(email, password)
       navigate('/dashboard')
     } catch (err) {
-      setLocalError(err.response?.data?.message || 'Login failed')
+      const msg = err.response?.data?.message || err.response?.data?.error || 'Login failed';
+      setLocalError(msg);
     }
   }
 

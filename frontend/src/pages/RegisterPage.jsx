@@ -36,7 +36,8 @@ export default function RegisterPage() {
       await register(username, email, password)
       navigate('/dashboard')
     } catch (err) {
-      setLocalError(err.response?.data?.message || 'Registration failed')
+      const msg = err.response?.data?.message || err.response?.data?.error || 'Registration failed';
+      setLocalError(msg);
     }
   }
 

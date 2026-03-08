@@ -16,14 +16,16 @@ export const register = async (req, res) => {
     // Validate input
     if (!username || !email || !password) {
       console.log('Missing fields');
-      return res.status(400).json({ error: 'Missing required fields' });
+      const msg = 'Missing required fields';
+      return res.status(400).json({ error: msg, message: msg });
     }
 
     console.log('Checking existing user...');
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       console.log('User already exists');
-      return res.status(409).json({ error: 'Email already registered' });
+      const msg = 'Email already registered';
+      return res.status(409).json({ error: msg, message: msg });
     }
 
     console.log('Creating user...');
@@ -40,7 +42,8 @@ export const register = async (req, res) => {
     });
   } catch (err) {
     console.error('Register error:', err);
-    res.status(500).json({ error: 'Internal server error' });
+    const msg = 'Internal server error';
+    res.status(500).json({ error: msg, message: msg });
   }
 };
 
@@ -50,13 +53,15 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password required' });
+      const msg = 'Email and password required';
+      return res.status(400).json({ error: msg, message: msg });
     }
 
     const user = await User.findOne({ email }).select('+password');
 
     if (!user || !(await user.comparePassword(password))) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      const msg = 'Invalid credentials';
+      return res.status(401).json({ error: msg, message: msg });
     }
 
     res.json({
@@ -66,7 +71,8 @@ export const login = async (req, res) => {
     });
   } catch (err) {
     console.error('Login error:', err);
-    res.status(500).json({ error: 'Internal server error' });
+    const msg = 'Internal server error';
+    res.status(500).json({ error: msg, message: msg });
   }
 };
 
