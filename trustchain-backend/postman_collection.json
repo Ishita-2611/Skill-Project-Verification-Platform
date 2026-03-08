@@ -1,0 +1,361 @@
+{
+  "info": {
+    "name": "TrustChain v1.0 API",
+    "description": "Complete REST API for TrustChain blockchain verification platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"dev1\",\n  \"email\": \"dev@test.com\",\n  \"password\": \"Pass1234!\",\n  \"role\": \"developer\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"dev@test.com\",\n  \"password\": \"Pass1234!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "me"]
+            }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bio\": \"Full stack developer\",\n  \"avatar\": \"https://example.com/avatar.jpg\",\n  \"skills\": [\"javascript\", \"mongodb\", \"ethereum\"],\n  \"githubUrl\": \"https://github.com/dev1\",\n  \"walletAddress\": \"0x...\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "me"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "item": [
+        {
+          "name": "Upload Project",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "/path/to/project.zip"
+                },
+                {
+                  "key": "title",
+                  "value": "My DApp Project",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "A decentralized application built on Ethereum",
+                  "type": "text"
+                },
+                {
+                  "key": "githubUrl",
+                  "value": "https://github.com/user/myapp",
+                  "type": "text"
+                },
+                {
+                  "key": "skills",
+                  "value": "[\"solidity\",\"javascript\",\"react\"]",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/upload",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "projects", "upload"]
+            }
+          }
+        },
+        {
+          "name": "Get My Projects",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/my",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "projects", "my"]
+            }
+          }
+        },
+        {
+          "name": "Get Project by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/{{projectId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "projects", "{{projectId}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Project Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "projects", "stats"]
+            }
+          }
+        },
+        {
+          "name": "Update Project Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"verified\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/{{projectId}}/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "projects", "{{projectId}}", "status"]
+            }
+          }
+        },
+        {
+          "name": "Delete Project",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/{{projectId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "projects", "{{projectId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Verification",
+      "item": [
+        {
+          "name": "Submit Verification",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 5,\n  \"comment\": \"Great project, well-structured code\",\n  \"skills\": [\"solidity\", \"javascript\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/verify/{{projectId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "verify", "{{projectId}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Project Verifications",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/verify/{{projectId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "verify", "{{projectId}}"]
+            }
+          }
+        },
+        {
+          "name": "Verify Hash on Chain",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/verify/hash/{{projectHash}}?userAddress={{walletAddress}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "verify", "hash", "{{projectHash}}"],
+              "query": [
+                {
+                  "key": "userAddress",
+                  "value": "{{walletAddress}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Reviewer Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/verify/stats/reviewer",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "verify", "stats", "reviewer"]
+            }
+          }
+        },
+        {
+          "name": "Get Verification Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/verify/stats/all",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "verify", "stats", "all"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "projectId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "projectHash",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "walletAddress",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
